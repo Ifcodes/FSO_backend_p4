@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
+const {PORT, mongoUrl} = require('./utils/config')
 
 const blogSchema = new mongoose.Schema({
   title: String,
@@ -22,7 +23,6 @@ mongoose.set("toJSON", {
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = process.env.MONGOURI
 
 
 mongoose.connect(mongoUrl).then(() => console.log('Database connection established successfully.')).catch(() => console.log('Database connection failed to connect'))
@@ -48,7 +48,6 @@ app.post('/api/blogs', (request, response) => {
     })
 })
 
-const PORT = 3003
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
