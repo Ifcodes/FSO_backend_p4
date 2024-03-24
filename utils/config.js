@@ -1,4 +1,4 @@
-require('dotenv').config;
+require('dotenv').config();
 
 const mongoUrl = process.env.MONGOURI
 const PORT = 3003
