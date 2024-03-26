@@ -1,10 +1,7 @@
 
 const { test, describe } = require('node:test')
 const assert = require('node:assert')
-const dummyList = require('../utils/list_helpers').dummyList
-const totalLikes = require('../utils/list_helpers').totalLikes
-
-
+const { favoriteBlog, totalLikes, dummyList, mostBlog, mostLikes } = require('../utils/list_helpers')
 
 describe('should return total likes', () => {
   const bloglist = [
@@ -37,7 +34,7 @@ describe('should return total likes', () => {
       title: "TDD harms architecture",
       author: "Robert C. Martin",
       url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
-      likes: 0,
+      likes: 10,
       __v: 0
     },
     {
@@ -45,18 +42,43 @@ describe('should return total likes', () => {
       title: "Type wars",
       author: "Robert C. Martin",
       url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-      likes: 2,
+      likes: 15,
       __v: 0
     } 
   ]
+
+  mostLikes(bloglist)
 
   test('should return 1', () => {
     assert.equal(dummyList([]), 1)
   })
 
-  test('should return the single like for a single blogList', () => {
+  test('should return the total likes for a single blogList', () => {
     const result = totalLikes(bloglist)
-    assert.strictEqual(result, 29)
+    assert.strictEqual(result, 52)
   })
 
+  test('should match blog with highest likes', () => {
+    const blogToTest = {
+      title: "Type wars",
+      author: "Robert C. Martin",
+      likes: 15
+    }
+    assert.deepEqual(favoriteBlog(bloglist), blogToTest)
+  })
+
+  test('should return most blogs', () => {
+    const blogToTest = {
+      author: "Robert C. Martin",
+      totalBlogs: 3
+    }
+
+    assert.deepEqual(mostBlog(bloglist), blogToTest)
+  })
+
+  test('should return most likes', () => {
+    const mostLikedBlog = { author: 'Robert C. Martin', likes: 35 }
+
+    assert.deepEqual(mostLikes(bloglist), mostLikedBlog)
+  })
 })
